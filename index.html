@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>NTUST-shadow/LineBotFunctionProduction 系統架構與流程簡報</title>
+    <style>
+        body { font-family: "Segoe UI", "Microsoft JhengHei", Arial, sans-serif; margin: 0; padding: 0; background: #f5f7fa; }
+        .slide { background: #fff; margin: 32px auto 32px auto; padding: 48px 64px; border-radius: 16px; max-width: 900px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+        h1, h2 { color: #2563eb; }
+        h1 { font-size: 2.5em; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
+        h2 { font-size: 2em; margin-top: 32px; }
+        ul { margin-left: 32px; }
+        .img-placeholder, .img-embed { text-align: center; margin: 18px 0; }
+        .img-embed img { max-width: 100%; border-radius: 10px; border: 2px solid #ddd; }
+        code, pre { background: #f3f3fa; color: #2b2b2b; border-radius: 4px; padding: 2px 6px; }
+        .mermaid { background: #f9f9ff; border: 1px solid #eee; border-radius: 8px; padding: 18px; margin: 14px 0; font-size: 0.95em; }
+        .footer { color: #aaa; text-align: right; font-size: 0.9em; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+<div class="slide">
+    <h1>NTUST-shadow/LineBotFunctionProduction<br>系統架構與流程簡報</h1>
+    <ul>
+        <li>專案名稱：NTUST-shadow/LineBotFunctionProduction</li>
+        <li>主題：系統架構與流程簡報</li>
+        <li>日期：2025-06-11</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>目錄</h2>
+    <ol>
+        <li>專案簡介</li>
+        <li>系統架構圖</li>
+        <li>架構圖說明</li>
+        <li>主要訊息處理流程圖</li>
+        <li>流程圖說明</li>
+        <li>主要功能</li>
+        <li>對話與上下文管理</li>
+        <li>特色與優點</li>
+        <li>Q&amp;A</li>
+    </ol>
+</div>
+
+<div class="slide">
+    <h2>專案簡介</h2>
+    <ul>
+        <li>整合 LINE Bot、OpenAI GPT、NTUST 校內系統（SSO/Moodle）查詢與解封服務</li>
+        <li>技術：Azure Functions、C#、LINE Messaging API、OpenAI</li>
+        <li>用戶可直接於 LINE 上查詢／解鎖帳號或 IP，也可進行知識問答</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>系統架構圖</h2>
+    <div class="img-embed">
+        <img src="image1" alt="系統架構圖">
+        <div style="color:#888;font-size:0.95em;">圖：系統架構圖（架構說明）</div>
+    </div>
+</div>
+
+<div class="slide">
+    <h2>架構圖說明</h2>
+    <ul>
+        <li>核心：Azure Function（LineWebhook）處理所有 LINE 端訊息</li>
+        <li>功能定義：FunctionDefinitions 設定所有可呼叫的查詢/解鎖功能</li>
+        <li>服務層：Services（AccessControlService、EmbeddingService、KnowledgeService）負責 API 串接</li>
+        <li>外部 API：Moodle、SSO、天氣、OpenAI GPT</li>
+        <li>PromptTemplates 提供回應模板，MemoryStore 管理用戶上下文</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>主要訊息處理流程圖</h2>
+    <div class="img-embed">
+        <img src="image2" alt="主要訊息處理流程圖">
+        <div style="color:#888;font-size:0.95em;">圖：主要訊息處理流程圖</div>
+    </div>
+</div>
+
+<div class="slide">
+    <h2>流程圖說明</h2>
+    <ul>
+        <li>使用者傳送訊息至 LINE Bot</li>
+        <li>Webhook 解析訊息，根據需求呼叫功能或服務</li>
+        <li>查詢/解鎖時會呼叫 Services 與校內 API</li>
+        <li>如需 AI 對話則串接 OpenAI GPT</li>
+        <li>結果經模板包裝後回覆用戶</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>主要功能</h2>
+    <ul>
+        <li>查詢與解鎖 IP 狀態（Moodle/SSO）</li>
+        <li>查詢與解鎖帳號狀態</li>
+        <li>查詢天氣</li>
+        <li>搜尋知識庫</li>
+        <li>支援用戶上下文記憶與自然語言對話</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>對話與上下文管理</h2>
+    <ul>
+        <li>使用記憶體記錄用戶前後訊息</li>
+        <li>PromptTemplates 定義多種情境回覆策略</li>
+        <li>強化自然語言互動體驗</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>特色與優點</h2>
+    <ul>
+        <li>多功能自動化查詢與解鎖</li>
+        <li>結合 OpenAI GPT 提供自然語言回覆</li>
+        <li>支援上下文管理與多輪對話</li>
+        <li>可擴充性高，適合校園多場景應用</li>
+    </ul>
+</div>
+
+<div class="slide">
+    <h2>Q&amp;A</h2>
+    <p>歡迎提問！</p>
+</div>
+
+<div class="footer">
+    本簡報由 GitHub Copilot 協助產生｜2025-06-11
+</div>
+
+</body>
+</html>
